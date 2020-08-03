@@ -2,6 +2,9 @@
 import random
 
 def dead_state(width, height):
+    '''
+    Emits a board state when supplied with a specified board width and height.
+    '''
     board_state = []
     for n in range(height):
         row = [0 for x in range(width)]
@@ -9,6 +12,9 @@ def dead_state(width, height):
     return board_state    
 
 def random_state(width, height):
+    '''
+    Emits a board state with randomly generated cell states.
+    '''
     board_state = dead_state(width, height)
     for row in board_state:
         for cell_num, cel in enumerate(row):
@@ -21,6 +27,9 @@ def random_state(width, height):
     return board_state
 
 def render(board_state):
+    '''
+    Renders a board in the terminal when supplied with a board state.
+    '''
     print('-' * (len(board_state[0]) + 2))
     for row in board_state:
         print('|', end ='')
