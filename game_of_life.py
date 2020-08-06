@@ -63,12 +63,11 @@ def next_cell_state(cell_coords, state):
     cell_state = state[x][y]
     num_live_neighbors = 0
     for row_index in range((x-1), (x+1)+1):
-        if row_index < 0 or row_index >= height:
-            continue
+        if row_index < 0 or row_index >= height: continue
         for column_index in range((y-1), (y+1)+1):
-            if column_index < 0 or column_index >= width:
-                continue
-            if state[row_index][column_index] == 1:
+            if column_index < 0 or column_index >= width: continue
+            if row_index == x and column_index == y: continue
+            if state[row_index][column_index] == live:
                 num_live_neighbors += 1
     if cell_state == live:
         if num_live_neighbors <= 1:
