@@ -1,5 +1,7 @@
 #board.py
 import random
+import time
+
 dead = 0
 live = 1
 
@@ -40,17 +42,21 @@ def render(board_state):
     '''
     Renders a board in the terminal when supplied with a board state.
     '''
+    display_as = {
+        dead : ' ',
+        live : u"\u2588" # Unicode for filled in square
+    }
     width = state_width(board_state)
-    print('-' * (width + 2))
+    print('-' * ((width * 2) + 2))
     for row in board_state:
         print('|', end ='')
         for cell in row:
-            if cell == 1:
-                print('#', end='')
+            if cell == live:
+                print(display_as[live] * 2, end='')
             else:
-                print(' ', end='')
+                print(display_as[dead] * 2, end='')
         print('|')        
-    print('-' * (width + 2))
+    print('-' * ((width * 2) + 2))
 
 def next_cell_state(cell_coords, state):
     '''
@@ -91,10 +97,23 @@ def next_board_state(initial_state):
             next_state[row_index][column_index] = next_cell_state((row_index,column_index), initial_state)
     return next_state    
 
+def board_generator(state):
+    '''
+    Generator which continuously generates the next board state.
+    '''
+    while True:
+        next_state = next_board_state(state)
+        yield next_state
+        state = next_state
+        time.sleep(.5)
+
+def run_simulation(state):
+    for phase in board_generator(state):
+        render(phase)
+
 def main(argv):
     state = (random_state(int(argv[1]),int(argv[2])))
-    next_state = next_board_state(state)
-    return render(state), render(next_state)
+    run_simulation(state)
 
 if __name__ == '__main__':
     import sys
