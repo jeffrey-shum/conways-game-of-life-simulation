@@ -38,6 +38,19 @@ def state_height(state):
     '''
     return len(state)
 
+def load_board_state(filepath):
+    with open(filepath, 'r') as f:
+        lines = [l.rstrip() for l in f.readlines()] # rstrip() to ignore newlines
+
+    width = state_width(lines)
+    height = state_height(lines)
+    board_state = dead_state(width, height)
+
+    for row_index, row in enumerate(lines):
+        for column_index, character in enumerate(row):
+            board_state[row_index][column_index] = int(character)
+    
+    return board_state
 def render(board_state):
     '''
     Renders a board in the terminal when supplied with a board state.
