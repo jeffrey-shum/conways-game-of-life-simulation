@@ -108,6 +108,9 @@ def board_generator(state):
         time.sleep(.5)
 
 def run_simulation(state):
+    '''
+    Renders the game of life simulation continuously.
+    '''
     for phase in board_generator(state):
         render(phase)
 
